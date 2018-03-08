@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>audio</title>
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<h2>Audio Player</h2>
+	<div class="container">
+		<div id="seek-bar">
+			<div id="fill"></div>
+			<div id="handle"></div>
+		</div>
+		<div class="name">
+			<div class="list">
+				<h1>HEAVY</h1>
+				<h1>Let's hurt tonight</h1>
+				<h1>lost on you</h1>
+				<h1>no vacancy</h1>
+			</div>
+		</div>
+		<div class="back" onclick="back()"><img src="back.png" height="70px" width="70px"></div>
+		<div class="forward"  onclick="next()"><img src="next.png" height="70px" width="70px"></div>
+		<div class="imgcontainer">
+			<div class="img"></div>
+		</div>
+		<div class="menu">
+			<ol>
+				<li id="a">Heavy</li>
+				<li id="b">Lets Hurt Tonight</li>
+				<li id="c">Lost on You</li>
+				<li id="d">No Vacancy</li>
+			</ol>
+
+			<div class="pause" onclick="play()"><img src="pause.png" height="70px" width="70px"></div>
+
+		</div>
+		<script type="text/javascript">
+			var fillBar = document.getElementById("fill");
+			var test = 0
+			var songno = 0;
+			var songs = ['1.mp3','2.mp3','3.mp3','4.mp3']
+			var img = ['url(1.jpg)','url(2.jpg)','url(3.jpg)','url(4.jpg)']
+			var song = new Audio();
+			var a = 0
+			$(function() {
+				$(document).on('mousewheel', function(event) {
+					$('.pause img').attr('src','play.png')
+					if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
+						a = a-1
+						test = 1
+						if (a <0) {
+							a = 3
+							$('.img').css('background-image',img[a]);
+							
+						} 
+						else {
+							$('.img').css('background-image',img[a]);
+							
+						}
+					}
+					else
+					{
+						a = a+1
+						test = 2
+						if (a >3) {
+							a = 0
+							$('.img').css('background-image',img[a]);
+							
+						} 
+						else {
+							$('.img').css('background-image',img[a]);
+							
+						}
+					}
+				});
+			});
+			function x(){
+				if (songno != a) {
+					if (test = 1) {
+						songno = a-1
+						next()
+					}
+					else if(test = 2){
+						songno = a
+						next()
+					}
+				}
+			}
+			$(document).ready(function() {
+				song.src = songs[songno]
+				playsong()
+			})
+			function playsong(){
+				song.play()
+			}
+			function play(){
+				test = 0
+				if (song.paused) 
+				{
+					song.play();
+					$('.pause img').attr('src','pause.png')
+					var d = song.currentTime
+					var c = song.duration
+					console.log(d , c)
+				}
+				else 
+				{
+					song.pause();
+					$('.pause img').attr('src','play.png')
+				}
+				x()
+			}
+			function next(){
+				songno++
+				a = songno
+				if (songno>3) {
+					songno = 0
+					song.src = '1.mp3'
+					song.play();
+					$('.img').css('background-image',img[songno]);
+					
+				} else {
+					song.src = songs[songno]
+					song.play();
+					console.log(songno)
+					
+					song.play();
+					$('.img').css('background-image',img[songno]);
+				}
+
+			}
+			function back(){
+				songno--
+				a = songno
+				if (songno<0) {
+					songno = 3
+					song.src = '4.mp3'
+					song.play();
+					$('.img').css('background-image',img[songno]);
+					
+				} else {
+					song.src = songs[songno]
+					song.play();
+					console.log(songno)
+					$('.img').css('background-image',img[songno]);
+					song.play();
+				}			
+			}
+			$('.lines').click(function(){
+				$(".menu").css("left",'0');
+				$(".cover").css("right",'0');
+			})
+			$('.cross').click(function(){
+				$(".menu").css("left",'-100%');
+				$(".cover").css("right",'-100%');
+			})
+			$('#a').click(function(){
+				songno = 0;
+				a =songno
+				song.src = '1.mp3'
+				playsong()
+				$('.img').css('background-image', img[songno])
+			})
+			$('#b').click(function(){
+				songno = 1;
+				a =songno
+				song.src = '2.mp3'
+				playsong()
+				$('.img').css('background-image', img[songno])
+			})
+			$('#c').click(function(){
+				songno = 2;
+				a =songno
+				song.src = '3.mp3'
+				playsong()
+				$('.img').css('background-image', img[songno])
+			})
+			$('#d').click(function(){
+				songno = 3;
+				a =songno
+				song.src = '4.mp3'
+				playsong()
+				$('.img').css('background-image', img[songno])
+			})
+			function name(){
+				if (a==0) {
+					$('.list').css('transition','0.3s')
+					$('.list').css('top','0')
+					$('.container').css('background-color','#FFCC33')
+				}
+				else if (a==1){
+					$('.list').css('transition','0.3s')
+					$('.list').css('top','-80px')
+					$('.container').css('background-color','#3498DB')
+				}
+				else if (a==2){
+					$('.list').css('transition','0.3s')
+					$('.list').css('top','-160px')
+					$('.container').css('background-color','#239B56')
+				}
+				else if (a==3){
+					$('.list').css('transition','0.3s')
+					$('.list').css('top','-240px')
+					$('.container').css('background-color','#E74C3C')
+				}
+
+			}
+			song.addEventListener('timeupdate',function(){ 
+
+				var position = song.currentTime / song.duration;
+				fillBar.style.width = position * 100 +'%';
+			});
+			window.setInterval(function(){
+				name()
+			}, 200);
+		</script>
+	</body>
+	</html>
