@@ -118,11 +118,13 @@
 				a = songno
 				if (songno>3) {
 					songno = 0
+					a = songno
 					song.src = '1.mp3'
 					song.play();
 					$('.img').css('background-image',img[songno]);
 					
 				} else {
+					a = songno
 					song.src = songs[songno]
 					song.play();
 					console.log(songno)
@@ -137,11 +139,13 @@
 				a = songno
 				if (songno<0) {
 					songno = 3
+					a = songno
 					song.src = '4.mp3'
 					song.play();
 					$('.img').css('background-image',img[songno]);
 					
 				} else {
+					a = songno
 					song.src = songs[songno]
 					song.play();
 					console.log(songno)
